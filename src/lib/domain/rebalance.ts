@@ -64,7 +64,12 @@ const DE_MINIMIS_ACCOUNT_TOTAL = 1;
 
 function roundShares(value: number, precision: number): number {
   const factor = 10 ** precision;
-  return Math.round(value * factor) / factor;
+  return Math.trunc(value * factor) / factor;
+}
+
+export function precisionForSymbol(symbol: string, settings: Settings): number {
+  const wholeOnly = settings.wholeShareSymbols ?? [];
+  return wholeOnly.includes(symbol) ? 0 : settings.sharePrecision;
 }
 
 function roundMoney(value: number): number {
@@ -132,10 +137,8 @@ function preferredSymbolByClass(
 function trimOverspend(
   trades: Trade[],
   availableCash: number,
-  precision: number,
+  settings: Settings,
 ): void {
-  const factor = 10 ** precision;
-
   for (let guard = 0; guard < 50; guard += 1) {
     const flow = trades.reduce(
       (sum, trade) =>
@@ -151,6 +154,8 @@ function trimOverspend(
     const buy = buys[0];
     if (!buy) return;
 
+    const precision = precisionForSymbol(buy.symbol, settings);
+    const factor = 10 ** precision;
     const reduceDollars = Math.min(buy.amount, overspend);
     const reduceShares = Math.ceil((reduceDollars / buy.price) * factor) / factor;
     const newShares = roundShares(buy.shares - reduceShares, precision);
@@ -376,7 +381,10 @@ export function rebalance(input: RebalanceInput): RebalancePlan {
         const symbol = preferred.get(assetClass.id);
         if (!symbol) continue;
         const price = priceForSymbol(positions, symbol);
-        const shares = roundShares(distributable / price, settings.sharePrecision);
+        const shares = roundShares(
+          distributable / price,
+          precisionForSymbol(symbol, settings),
+        );
         if (shares <= 0) continue;
         seenSymbols.add(symbol);
         trades.push({
@@ -399,7 +407,10 @@ export function rebalance(input: RebalanceInput): RebalancePlan {
             : 1 / classPositions.length;
         const symbolTarget = distributable * weight;
         const deltaDollars = symbolTarget - position.marketValue;
-        let shares = roundShares(deltaDollars / position.price, settings.sharePrecision);
+        let shares = roundShares(
+          deltaDollars / position.price,
+          precisionForSymbol(position.symbol, settings),
+        );
 
         if (shares < 0 && Math.abs(shares) > position.quantity) {
           shares = -position.quantity;
@@ -421,7 +432,7 @@ export function rebalance(input: RebalanceInput): RebalancePlan {
     }
 
     if (corePosition) {
-      trimOverspend(trades, startingCash, settings.sharePrecision);
+      trimOverspend(trades, startingCash, settings);
     }
 
     const nonCashFlow = trades.reduce(

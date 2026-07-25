@@ -41,6 +41,9 @@ export function TargetEditor({
   );
   const [bandPct, setBandPct] = useState(String(settings.driftBandPct));
   const [bandAbs, setBandAbs] = useState(String(settings.driftBandAbs));
+  const [wholeShare, setWholeShare] = useState(
+    (settings.wholeShareSymbols ?? []).join(", "),
+  );
 
   const total = useMemo(
     () =>
@@ -78,6 +81,10 @@ export function TargetEditor({
         ...settings,
         driftBandPct: Number.parseFloat(bandPct) || 0,
         driftBandAbs: Number.parseFloat(bandAbs) || 0,
+        wholeShareSymbols: wholeShare
+          .split(",")
+          .map((symbol) => symbol.trim().toUpperCase())
+          .filter((symbol) => symbol.length > 0),
       },
     );
   }
@@ -181,6 +188,28 @@ export function TargetEditor({
               className="w-full rounded-lg border border-slate-200 px-3 py-1.5 text-sm tabular-nums outline-none transition focus:border-slate-900"
             />
           </div>
+        </div>
+
+        <div className="mt-4">
+          <label
+            htmlFor="whole-share"
+            className="mb-1 block text-xs font-medium uppercase tracking-wide text-slate-500"
+          >
+            Whole shares only
+          </label>
+          <input
+            id="whole-share"
+            type="text"
+            value={wholeShare}
+            onChange={(event) => setWholeShare(event.target.value)}
+            placeholder="e.g. BIL, IAU, VGK"
+            className="w-full rounded-lg border border-slate-200 px-3 py-1.5 text-sm outline-none transition focus:border-slate-900"
+          />
+          <p className="mt-1 text-xs text-slate-400">
+            Symbols that cannot be traded fractionally. Orders round down to a
+            whole share and the remainder stays in that account&rsquo;s money
+            market.
+          </p>
         </div>
 
         <button

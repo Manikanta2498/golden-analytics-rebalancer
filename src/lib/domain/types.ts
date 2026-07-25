@@ -58,6 +58,7 @@ export interface Settings {
   cashAssetClassId: string;
   enrichmentEnabled: boolean;
   sharePrecision: number;
+  wholeShareSymbols: string[];
 }
 
 export interface PortfolioStore {

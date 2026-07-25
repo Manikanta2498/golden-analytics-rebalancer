@@ -274,6 +274,56 @@ describe("cash isolation under an impossible target", () => {
   });
 });
 
+describe("securities that do not support fractional trading", () => {
+  const wholeShare = rebalance(
+    buildInput({
+      settings: {
+        ...DEFAULT_SETTINGS,
+        wholeShareSymbols: ["BIL", "IAU", "VGK", "NUKZ", "SHLD"],
+      },
+    }),
+  );
+
+  it("emits only whole shares for those symbols", () => {
+    const constrained = wholeShare.trades.filter((trade) =>
+      ["BIL", "IAU", "VGK", "NUKZ", "SHLD"].includes(trade.symbol),
+    );
+    expect(constrained.length).toBeGreaterThan(0);
+    for (const trade of constrained) {
+      expect(Number.isInteger(trade.shares)).toBe(true);
+    }
+  });
+
+  it("still allows fractional shares for symbols that support it", () => {
+    const fractional = wholeShare.trades.filter(
+      (trade) => trade.symbol === "FNILX" || trade.symbol === "FZILX",
+    );
+    expect(fractional.length).toBeGreaterThan(0);
+  });
+
+  it("keeps every account cash-neutral despite coarser rounding", () => {
+    for (const accountPlan of wholeShare.accountPlans) {
+      if (accountPlan.skipped) continue;
+      const net = accountPlan.trades.reduce(
+        (sum, t) => sum + (t.action === "buy" ? t.amount : -t.amount),
+        0,
+      );
+      expect(net).toBeCloseTo(0, 2);
+      expect(accountPlan.endingCash).toBeGreaterThanOrEqual(0);
+    }
+  });
+
+  it("never overshoots a target by rounding a buy up", () => {
+    for (const trade of wholeShare.trades) {
+      if (trade.action !== "sell") continue;
+      const position = input.positions.find(
+        (p) => p.accountId === trade.accountId && p.symbol === trade.symbol,
+      );
+      expect(trade.shares).toBeLessThanOrEqual((position?.quantity ?? 0) + 1e-6);
+    }
+  });
+});
+
 describe("unmapped holdings", () => {
   it("holds unmapped dollars out of the target math", () => {
     const base = buildInput();

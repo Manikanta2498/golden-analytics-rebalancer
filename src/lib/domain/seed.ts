@@ -119,6 +119,7 @@ export const DEFAULT_SETTINGS: Settings = {
   cashAssetClassId: ASSET_CLASS_IDS.cash,
   enrichmentEnabled: true,
   sharePrecision: 3,
+  wholeShareSymbols: [],
 };
 
 export function seedMappingsFor(symbols: string[]): SymbolMapping[] {
