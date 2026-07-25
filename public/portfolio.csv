@@ -1,0 +1,33 @@
+Account Number,Account Name,Symbol,Description,Quantity,Last Price,Last Price Change,Current Value,Today's Gain/Loss Dollar,Today's Gain/Loss Percent,Total Gain/Loss Dollar,Total Gain/Loss Percent,Percent Of Account,Cost Basis Total,Average Cost Basis,Type
+X483920176,Joint WROS,FZFXX**,HELD IN MONEY MARKET,,,,"$6,645.97 ",,,,,10.66%,,,Cash
+X483920176,Joint WROS,BIL,SPDR SERIES TRUST STATE STREET BLOOMBERG 1-3 MONTH T-BILL ETF,83.856,$91.51 ,$0.00 ,"$7,673.66 ",$0.00 ,0.00%,($10.07),-0.14%,12.30%,"$7,683.73 ",$91.63 ,Margin
+X483920176,Joint WROS,FNILX,Acme ZERO LARGE CAP INDEX FUND,428.791,$27.03 ,$0.46 ,"$11,590.22 ",$197.24 ,1.73%,"$3,704.75 ",47.01%,18.58%,"$7,885.47 ",$18.39 ,Margin
+X483920176,Joint WROS,FZILX,Acme ZERO INTERNATIONAL INDEX,710.181,$17.09 ,$0.23 ,"$12,136.99 ",$163.34 ,1.36%,"$4,275.29 ",54.31%,19.46%,"$7,861.70 ",$11.07 ,Margin
+X483920176,Joint WROS,IAU,ISHARES GOLD TR ISHARES NEW ISIN #US4642852044 SEDOL #BKP74N6,58.189,$81.26 ,$2.07 ,"$4,728.44 ",$120.45 ,2.61%,"$1,070.10 ",29.24%,7.58%,"$3,658.34 ",$62.87 ,Margin
+X483920176,Joint WROS,NUKZ,EXCHANGE TRADED CONCEPTS TRUST RANGE NUCLEAR RENAISSANCE INDEX ETF,70.335,$70.22 ,$1.91 ,"$4,938.92 ",$134.34 ,2.79%,"$1,254.07 ",34.03%,7.92%,"$3,684.85 ",$52.39 ,Margin
+X483920176,Joint WROS,SHLD,GLOBAL X FDS DEFENSE TECH ETF,64.521,$63.28 ,($0.54),"$4,082.89 ",($34.84),-0.85%,$405.19 ,11.01%,6.55%,"$3,677.70 ",$57.00 ,Margin
+X483920176,Joint WROS,VGK,VANGUARD INTL EQUITY INDEX FDS FTSE EUROPE ETF,117.581,$89.87 ,$0.25 ,"$10,567.00 ",$29.40 ,0.27%,"$2,198.76 ",26.27%,16.94%,"$8,368.24 ",$71.17 ,Margin
+XQMTVRWK,Alex's old brokerage,FCASH**,HELD IN FCASH,,,,$0.21 ,,,,,100.00%,,,Cash
+8043672915,IRA (Alex),SPAXX**,HELD IN MONEY MARKET,,,,"$59,680.85 ",,,,,15.89%,,,Cash
+8043672915,IRA (Alex),BIL,SPDR SERIES TRUST STATE STREET BLOOMBERG 1-3 MONTH T-BILL ETF,515.497,$91.51 ,$0.00 ,"$47,173.13 ",$0.00 ,0.00%,"$2,886.78 ",6.52%,12.56%,"$44,286.35 ",$85.91 ,Cash
+8043672915,IRA (Alex),FNILX,Acme ZERO LARGE CAP INDEX FUND,1889.691,$27.03 ,$0.46 ,"$51,078.35 ",$869.26 ,1.73%,"$20,219.70 ",65.53%,13.60%,"$30,858.65 ",$16.33 ,Cash
+8043672915,IRA (Alex),FRGXX,FIMM GOVERNMENT PORTFOLIO: INSTL CL,6307.552,$1.00 ,$0.00 ,"$6,307.55 ",--,--,--,--,1.68%,--,--,Cash
+8043672915,IRA (Alex),FZILX,Acme ZERO INTERNATIONAL INDEX,3131.366,$17.09 ,$0.23 ,"$53,515.04 ",$720.21 ,1.36%,"$25,332.75 ",89.88%,14.25%,"$28,182.29 ",$9.00 ,Cash
+8043672915,IRA (Alex),IAU,ISHARES GOLD TR ISHARES NEW ISIN #US4642852044 SEDOL #BKP74N6,879.511,$81.26 ,$2.07 ,"$71,469.06 ","$1,820.59 ",2.61%,"$7,282.35 ",11.34%,19.03%,"$64,186.71 ",$72.98 ,Cash
+8043672915,IRA (Alex),NUKZ,EXCHANGE TRADED CONCEPTS TRUST RANGE NUCLEAR RENAISSANCE INDEX ETF,309.694,$70.22 ,$1.91 ,"$21,746.71 ",$591.52 ,2.79%,"$5,521.84 ",34.03%,5.79%,"$16,224.87 ",$52.39 ,Cash
+8043672915,IRA (Alex),SHLD,GLOBAL X FDS DEFENSE TECH ETF,284.091,$63.28 ,($0.54),"$17,977.28 ",($153.41),-0.85%,"$1,784.09 ",11.01%,4.79%,"$16,193.19 ",$57.00 ,Cash
+8043672915,IRA (Alex),VGK,VANGUARD INTL EQUITY INDEX FDS FTSE EUROPE ETF,517.784,$89.87 ,$0.25 ,"$46,533.25 ",$129.45 ,0.27%,"$10,267.66 ",28.32%,12.39%,"$36,265.59 ",$70.04 ,Cash
+2957816403,IRA (Jordan),SPAXX**,HELD IN MONEY MARKET,,,,"$28,629.95 ",,,,,30.04%,,,Cash
+2957816403,IRA (Jordan),BIL,SPDR SERIES TRUST STATE STREET BLOOMBERG 1-3 MONTH T-BILL ETF,137.471,$91.51 ,$0.00 ,"$12,579.97 ",$0.00 ,0.00%,($20.62),-0.17%,13.20%,"$12,600.59 ",$91.66 ,Cash
+2957816403,IRA (Jordan),FNILX,Acme ZERO LARGE CAP INDEX FUND,487.248,$27.03 ,$0.46 ,"$13,170.31 ",$224.13 ,1.73%,"$5,306.13 ",67.42%,13.82%,"$7,864.18 ",$16.14 ,Cash
+2957816403,IRA (Jordan),FZILX,Acme ZERO INTERNATIONAL INDEX,798.502,$17.09 ,$0.23 ,"$13,646.40 ",$183.66 ,1.36%,"$6,523.76 ",91.67%,14.32%,"$7,122.64 ",$8.92 ,Cash
+2957816403,IRA (Jordan),IAU,ISHARES GOLD TR ISHARES NEW ISIN #US4642852044 SEDOL #BKP74N6,65.32,$81.26 ,$2.07 ,"$5,307.90 ",$135.21 ,2.61%,"$1,196.01 ",29.08%,5.57%,"$4,111.89 ",$62.95 ,Cash
+2957816403,IRA (Jordan),NUKZ,EXCHANGE TRADED CONCEPTS TRUST RANGE NUCLEAR RENAISSANCE INDEX ETF,78.66,$70.22 ,$1.91 ,"$5,523.51 ",$150.24 ,2.79%,"$1,402.51 ",34.03%,5.80%,"$4,121.00 ",$52.39 ,Cash
+2957816403,IRA (Jordan),SHLD,GLOBAL X FDS DEFENSE TECH ETF,72.22,$63.28 ,($0.54),"$4,570.08 ",($39.00),-0.85%,$453.54 ,11.01%,4.80%,"$4,116.54 ",$57.00 ,Cash
+2957816403,IRA (Jordan),VGK,VANGUARD INTL EQUITY INDEX FDS FTSE EUROPE ETF,132.011,$89.87 ,$0.25 ,"$11,863.83 ",$33.00 ,0.27%,"$2,600.62 ",28.07%,12.45%,"$9,263.21 ",$70.17 ,Cash
+,,,,,,,,,,,,,,,
+"The data and information in this spreadsheet is provided to you solely for your use and is not for distribution. The spreadsheet is provided for informational purposes only, and is not intended to provide advice, nor should it be construed as an offer to sell, a solicitation of an offer to buy or a recommendation for any security by Acme or any third party. Data and information shown is based on information known to Acme as of the date it was exported and is subject to change. It should not be used in place of your account statements or trade confirmations and is not intended for tax reporting purposes. For more information on the data included in this spreadsheet, including any limitations thereof, go to Acme.com.",,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+"Brokerage services are provided by Acme Brokerage Services LLC (FBS), 123 Acme Street, Acmefield, RI 12345. Custody and other services provided by National Financial Services LLC (NFS). Both are Acme Investment companies and members SIPC, NYSE. Neither FBS nor NFS offer crypto as a direct investment nor provide trading or custody services for such assets.",,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+Date downloaded Jun-1-2026 21:23 p.m ET,,,,,,,,,,,,,,,
