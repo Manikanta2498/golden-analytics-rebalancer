@@ -63,17 +63,17 @@ No database, no environment variables, no API keys, no signup. The bundled sampl
 
 ## Section C — AI usage log
 
-**1. Choosing an enrichment API for unknown tickers**
-
-- **What I asked for:** a way to classify tickers that aren't in a local list, since any new CSV can contain symbols we've never seen.
-- **What the AI gave me:** a design built on the Yahoo Finance `quoteSummary` API, written into the plan as settled, citing `fundProfile.categoryName`. It had only read search results — it never called the endpoint.
-- **What I did:** rejected it. I pushed back that Yahoo's unofficial endpoints are unreliable and told it to test before designing around it. The direct call returned `HTTP 429` on the first request from a clean IP, and the documented cookie+crumb workaround was equally blocked — `getcrumb` itself returns "Too Many Requests". I then researched alternatives, proposed **OpenFIGI**, and required the same test. It returned `HTTP 200` first try. **Why:** a dependency that fails 100% of the time would have failed for the evaluators too. OpenFIGI also turned out better on the merits — its normalized name for `FRGXX` is `FIDELITY INV MMKT GOVT-INST`, which is more classifiable than the broker's own description.
-
-**2. Hard-coded asset list vs. a real lookup**
+**1. A hard-coded ticker list offered as the whole solution**
 
 - **What I asked for:** a way to map tickers to asset classes.
-- **What the AI gave me:** a static, hand-maintained ticker → asset-class map as the primary mechanism.
-- **What I did:** rejected it as the primary mechanism and asked for an API-backed default instead. **Why:** a hard-coded list only covers tickers someone anticipated, goes stale immediately, and silently drops anything unfamiliar. It was kept, but demoted to a fast path inside a layered pipeline that ends in a human review queue. Separately, the AI's first seed map listed VTI, VXUS, GLD, SGOV and BND — **not one of which appears in the actual CSV** — which confirmed that generated defaults describe a generic portfolio rather than this one.
+- **What the AI gave me:** a static, hand-maintained ticker → asset-class map, presented as the mechanism rather than as one layer of it. Its first seed list was VTI, VXUS, GLD, SGOV and BND — **not one of which appears in the actual CSV** — which told me the default was describing a generic portfolio, not this one.
+- **What I did:** rejected it as the primary mechanism and asked it to design an API lookup for any ticker we haven't already saved. **Why:** a hard-coded list only ever covers the tickers someone anticipated, goes stale immediately, and silently drops anything unfamiliar. The list survived, but demoted to a fast path inside a layered pipeline that ends in a human review queue.
+
+**2. Yahoo Finance, designed in before it was ever called**
+
+- **What I asked for:** the API lookup from the previous step — something that resolves a ticker we've never seen.
+- **What the AI gave me:** a design built on the Yahoo Finance `quoteSummary` API, written into the plan as settled and already moving into implementation, citing `fundProfile.categoryName` as the field to read.
+- **What I did:** stopped it and asked directly whether it had actually tested the endpoint, and whether it returned the fields we needed. It went and tested, and reported `HTTP 429` — rate-limited on the first request from a clean IP. The documented cookie+crumb workaround was blocked too; `getcrumb` itself returns "Too Many Requests". I asked it to come back with better options, researched alternatives myself in parallel, and pointed it at **OpenFIGI**. It tested that one before designing around it this time, got `HTTP 200` first try, and that's what shipped. **Why:** a dependency that fails 100% of the time would have failed for the evaluators too. OpenFIGI also turned out better on the merits — its normalized name for `FRGXX` is `FIDELITY INV MMKT GOVT-INST`, which is more classifiable than the broker's own description.
 
 **3. Scope cuts based on a hand-coding time estimate**
 
