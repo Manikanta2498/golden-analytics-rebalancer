@@ -23,8 +23,6 @@ No database, no environment variables, no API keys, no signup. The bundled sampl
 
 **The rebalancing algorithm.** Targets are set at the *household* level but executed *per account*, because cash isolation means an account can only be funded by its own money market. The engine computes household target dollars, freezes any class inside the drift band, places the cash target across accounts in preference-rank order, then for each remaining class lets accounts keep what they already hold before distributing the remainder proportionally to leftover capacity. Keeping first is a deliberate trade-off: it substantially reduces churn but does not minimise trade count or tax cost, which a production system would optimise. Share quantities truncate toward zero at the precision each symbol supports, and the settlement sleeve absorbs the residual so every account nets to exactly zero cash flow. Targets that cannot be funded are reported as unreachable rather than producing an unexecutable plan.
 
-*(432 words)*
-
 ---
 
 ## Section B — Architectural decisions and edge cases
@@ -43,15 +41,23 @@ No database, no environment variables, no API keys, no signup. The bundled sampl
 
 **1. An account's required buys exceed what that account's own cash can fund.**
 
-_[your answer]_
+- Buys are covered by cash along with sells from the same account, and trades are done with sells first so the funds are available
+- Goals for each account come from its own capability, and hence it never plans to spend more than what it has!
+- In some cases, rounding causes the total amount spent to exceed the available amount by a few cents; in such a case, the largest purchase is cut back to cover for the excess.
+- In case the goal is greater than the total value of the account, it is marked as unreachable
 
 **2. A single position is over-weighted for the account it's held in, but rebalancing it there would leave that account off its own target — while a different account already meets its target for that asset class.**
 
-_[your answer]_
+- No per account targets, only household targets, so each account can be unbalanced
+- Each class gets whatever is in the accounts first and only gives out the balance
+- The over-weighted position is left alone unless the household is over target for that class
 
 **3. A computed trade implies buying a fractional share of a security that doesn't support fractional trading.**
 
-_[your answer]_
+- wholeShareSymbols will be tagged with them; precision falls to 0 for those and remains at 3 decimals for all others
+- Truncation is done towards zero, ensuring a buy order doesn’t round up to a share that wasn’t requested by the target
+- The extra is not wasted; it gets parked in that portfolio’s money market sleeve automatically
+- Honest limit: the list is manual; production would pull tradability from broker reference data
 
 ---
 
