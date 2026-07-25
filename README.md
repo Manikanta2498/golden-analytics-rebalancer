@@ -1,6 +1,6 @@
 # Household Portfolio Rebalancer
 
-<!-- TODO: add Vercel link here once deployed -->
+**Live:** https://golden-analytics-rebalancer.vercel.app
 
 A full-stack tool that turns a flat broker CSV into a household asset-allocation view, lets you edit a target allocation, and returns the exact per-account trades needed to reach it — respecting the constraint that **cash cannot move between accounts**.
 
@@ -119,11 +119,41 @@ No database, no environment variables, no API keys, no signup. The bundled sampl
 
 ---
 
-## Known limitations
+## Known limitations and what production would need
+
+This is a 120-minute build scoped to the modelling problem. The domain logic is tested and I'd defend it; everything a real financial product needs *around* that logic is absent, and I'd rather name it than let it look overlooked.
+
+### Financial modelling
 
 - **No tax awareness** — no lots, holding periods, wash sales, or preference for trading inside retirement accounts.
-- **Prices are a CSV snapshot**, so a plan computed later is stale.
+- **Prices are a CSV snapshot**, so a plan computed later is stale. Production needs a live quote feed and a staleness guard that refuses to plan on old prices.
 - **No settlement modelling** between a sell and a dependent buy.
-- **Trade minimisation is heuristic**, not optimal.
-- **State is per-browser** — no sync across devices, no encryption at rest.
-- **Whole-share support is a manual list** rather than sourced from a broker's tradability API.
+- **Trade minimisation is heuristic**, not optimal. Which account keeps a contested holding depends on iteration order rather than an optimisation.
+- **Whole-share support is a manual list** rather than sourced from a broker's tradability reference data.
+- **No trade execution** — the plan is the output; nothing is routed to a broker.
+
+### Security and privacy
+
+- **No authentication or authorisation.** Anyone with the URL has the full app. There are no users, no sessions, no multi-tenancy.
+- **Holdings are stored unencrypted in `localStorage`**, readable by any script on the origin. A single XSS would expose a household's entire financial position. Production needs server-side storage with encryption at rest, per-user isolation, and a real session model.
+- **Broker exports contain account numbers.** They're sent to the server for parsing — never persisted there — but they are PII and would need handling as such.
+- **`/api/figi` is an open, unauthenticated proxy** with no rate limiting and no payload cap, so it can be used to drive traffic at OpenFIGI. The same is true of the parse and rebalance routes: no request size limit, so a large upload is a trivial denial-of-service.
+- **No security headers** — no CSP, HSTS, or frame protections configured.
+- **No audit trail.** A tool that recommends financial transactions needs an immutable record of who changed a target, when, and what plan was produced. Nothing is recorded.
+
+### Operations
+
+- **No structured logging**, request IDs, or error tracking. A failure in production is currently invisible.
+- **No metrics, uptime monitoring, or alerting**, and no health-check endpoint.
+- **No analytics**, so there's no signal on whether the classification queue is actually being used or silently abandoned.
+- **No CI pipeline.** Tests exist but nothing runs them on push, and Vercel deploys on merge without a passing-test gate — the most valuable thing to add first, since the suite already exists.
+- **No staging environment** and no migration strategy for the `localStorage` schema, so a shape change breaks existing users' saved state.
+
+### Testing
+
+74 unit tests cover the pure domain layer well. Not covered:
+
+- **Integration tests** for the route handlers.
+- **End-to-end tests** (Playwright) for upload → classify → target → plan.
+- **Accessibility testing** — keyboard navigation and screen-reader labels are unverified.
+- **Graceful degradation** when OpenFIGI is unavailable is by design (unknown symbols fall through to the review queue) but is not tested.
