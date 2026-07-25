@@ -42,21 +42,21 @@ No database, no environment variables, no API keys, no signup. The bundled sampl
 **1. An account's required buys exceed what that account's own cash can fund.**
 
 - Buys are covered by cash along with sells from the same account, and trades are done with sells first so the funds are available
-- Goals for each account come from its own capability, and hence it never plans to spend more than what it has!
+- Goals for each account come from its own capacity, and hence it never plans to spend more than what it has
 - In some cases, rounding causes the total amount spent to exceed the available amount by a few cents; in such a case, the largest purchase is cut back to cover for the excess.
 - In case the goal is greater than the total value of the account, it is marked as unreachable
 
 **2. A single position is over-weighted for the account it's held in, but rebalancing it there would leave that account off its own target — while a different account already meets its target for that asset class.**
 
-- No per account targets, only household targets, so each account can be unbalanced
-- Each class gets whatever is in the accounts first and only gives out the balance
+- No per-account targets, only household targets, so each account can be unbalanced
+- For each class, accounts keep what they already hold first, and only the shortfall is distributed
 - The over-weighted position is left alone unless the household is over target for that class
 
 **3. A computed trade implies buying a fractional share of a security that doesn't support fractional trading.**
 
-- wholeShareSymbols will be tagged with them; precision falls to 0 for those and remains at 3 decimals for all others
-- Truncation is done towards zero, ensuring a buy order doesn’t round up to a share that wasn’t requested by the target
-- The extra is not wasted; it gets parked in that portfolio’s money market sleeve automatically
+- Symbols that can't be traded fractionally are listed in `wholeShareSymbols`; precision falls to 0 for those and remains at 3 decimals for all others
+- Truncation is done towards zero, ensuring a buy order doesn't round up to a share that wasn't requested by the target
+- The extra is not wasted; it gets parked in that account's money market sleeve automatically
 - Honest limit: the list is manual; production would pull tradability from broker reference data
 
 ---
